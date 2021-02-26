@@ -1,7 +1,7 @@
 use crate::general_message::GeneralMessageDelivery;
 use crate::shared::DateTime;
 use openapi_schema::OpenapiSchema;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
 #[serde(rename_all = "camelCase")]

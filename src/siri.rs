@@ -1,8 +1,7 @@
-
-use openapi_schema::OpenapiSchema;
 use crate::service_delivery::ServiceDelivery;
 use crate::stop_points_delivery::StopPointsDelivery;
-use serde::{Serialize, Deserialize};
+use openapi_schema::OpenapiSchema;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Serialize, Deserialize, OpenapiSchema)]
 #[serde(rename_all = "PascalCase")]

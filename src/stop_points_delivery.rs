@@ -1,5 +1,5 @@
 use openapi_schema::OpenapiSchema;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
 #[serde(rename_all = "PascalCase")]
