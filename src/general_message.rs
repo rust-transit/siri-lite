@@ -1,6 +1,6 @@
 use crate::shared::DateTime;
 use openapi_schema::OpenapiSchema;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 // Note: this list seems to be specific to the idf profile
 // it can be extended if needed
