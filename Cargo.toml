@@ -2,7 +2,7 @@
 name = "siri-lite"
 version = "0.1.0"
 authors = ["antoine-de <antoine.desbordes@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 
