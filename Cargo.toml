@@ -8,8 +8,3 @@ edition = "2018"
 
 serde = { version = "1.0", features = ["derive"] }
 chrono = { version = "0.4", features = ["serde"] }
-
-
-syn = { version = "0.15.26", features = ["extra-traits"] } # needed to add the feature for openapischema
-openapi = { git = "https://github.com/antoine-de/openapi", rev = "11f732b373d2dc1d725f77a245fac3677b51318b" }
-openapi-schema = { git = "https://github.com/antoine-de/openapi-schema.git", rev = "7e7c373e8b9f96dd81c7aaae0d2d307d1e82ff40" }

@@ -1,4 +1,3 @@
-use openapi_schema::OpenapiSchema;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug)]
@@ -33,22 +32,10 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
     }
 }
 
-impl OpenapiSchema for DateTime {
-    fn generate_schema(
-        _spec: &mut openapi::v3_0::Spec,
-    ) -> openapi::v3_0::ObjectOrReference<openapi::v3_0::Schema> {
-        openapi::v3_0::ObjectOrReference::Object(openapi::v3_0::Schema {
-            schema_type: Some("string".into()),
-            format: Some("date-time".into()),
-            ..Default::default()
-        })
-    }
-}
-
 /// Common fields used by all the siri's Delivery
 ///
 /// Note: it is referenced as `xxxDelivery` in the siri specifications
-#[derive(Serialize, Deserialize, OpenapiSchema, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CommonDelivery {
     pub version: String,
     pub response_time_stamp: String,
