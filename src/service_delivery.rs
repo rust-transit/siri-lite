@@ -97,6 +97,11 @@ pub struct StopMonitoringDelivery {
     pub monitored_stop_visit: Vec<MonitoredStopVisit>,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EstimatedTimetableDelivery{
+
+}
 #[derive(Debug, Serialize, Deserialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct ServiceDelivery {
@@ -108,6 +113,8 @@ pub struct ServiceDelivery {
     /// Address of the service
     #[serde(skip_serializing_if = "Option::is_none")]
     pub address: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub response_timestamp: Option<DateTime>,
     /// Id of the response
     #[serde(skip_serializing_if = "Option::is_none")]
     pub response_message_identifier: Option<String>, // Note: this is mandatory for idf profil
@@ -115,4 +122,6 @@ pub struct ServiceDelivery {
     pub stop_monitoring_delivery: Vec<StopMonitoringDelivery>,
     #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub general_message_delivery: Vec<GeneralMessageDelivery>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub estimated_timetable_delivery: Vec<EstimatedTimetableDelivery>,
 }
