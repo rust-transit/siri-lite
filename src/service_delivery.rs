@@ -3,7 +3,7 @@ use crate::shared::DateTime;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "PascalCase")]
 pub enum ArrivalStatus {
     OnTime,
     Early,
@@ -88,7 +88,7 @@ pub struct StopMonitoringDelivery {
     /// Version of the siri's response
     pub version: String,
     /// Datetime of the response's production
-    pub response_time_stamp: String,
+    pub response_timestamp: String,
     /// Id of the query
     #[serde(skip_serializing_if = "Option::is_none")]
     pub request_message_ref: Option<String>, // Note: this is mandatory for idf profil
@@ -97,11 +97,179 @@ pub struct StopMonitoringDelivery {
     pub monitored_stop_visit: Vec<MonitoredStopVisit>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
-pub struct EstimatedTimetableDelivery{
-
+pub struct EstimatedTimetableDelivery {
+    pub response_timestamp: String,
+    pub version: String,
+    pub status: String,
+    pub estimated_journey_version_frame: Vec<EstimatedJourneyVersionFrame>,
 }
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EstimatedJourneyVersionFrame {
+    pub estimated_vehicle_journey: Vec<EstimatedVehicleJourney>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EstimatedVehicleJourney {
+    pub recorded_at_time: String,
+    pub line_ref: LineRef,
+    pub direction_ref: DirectionRef,
+    pub dated_vehicle_journey_ref: DatedVehicleJourneyRef,
+    pub route_ref: RouteRef,
+    pub published_line_name: Vec<PublishedLineName>,
+    pub origin_ref: OriginRef,
+    pub destination_ref: DestinationRef,
+    #[serde(default)]
+    pub destination_name: Vec<DestinationName>,
+    pub operator_ref: OperatorRef,
+    pub product_category_ref: ProductCategoryRef,
+    #[serde(default)]
+    pub journey_note: Vec<JourneyNote>,
+    pub first_or_last_journey: String,
+    pub estimated_calls: EstimatedCalls,
+    #[serde(default)]
+    pub vehicle_mode: Vec<String>,
+    #[serde(default)]
+    pub direction_name: Vec<DirectionName>,
+    #[serde(default)]
+    pub origin_name: Vec<OriginName>,
+    #[serde(default)]
+    pub vehicle_journey_name: Vec<VehicleJourneyName>,
+    #[serde(default)]
+    pub via: Vec<Vum>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct LineRef {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DirectionRef {
+    pub value: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DatedVehicleJourneyRef {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct RouteRef {
+    pub value: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PublishedLineName {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct OriginRef {
+    pub value: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DestinationRef {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DestinationName {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct OperatorRef {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ProductCategoryRef {}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct JourneyNote {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EstimatedCalls {
+    pub estimated_call: Vec<EstimatedCall>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EstimatedCall {
+    pub stop_point_ref: StopPointRef,
+    pub expected_arrival_time: Option<String>,
+    pub expected_departure_time: Option<String>,
+    pub aimed_arrival_time: Option<String>,
+    pub aimed_departure_time: Option<String>,
+    #[serde(default)]
+    pub destination_display: Vec<DestinationDisplay>,
+    pub arrival_status: Option<String>,
+    pub arrival_proximity_text: ArrivalProximityText,
+    pub arrival_platform_name: ArrivalPlatformName,
+    pub departure_status: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct StopPointRef {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DestinationDisplay {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ArrivalProximityText {
+    pub value: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ArrivalPlatformName {
+    pub value: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct DirectionName {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct OriginName {
+    pub value: String,
+    pub lang: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct VehicleJourneyName {
+    pub value: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Vum {
+    pub place_name: Vec<PlaceName>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PlaceName {
+    pub value: String,
+}
+
 #[derive(Debug, Serialize, Deserialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct ServiceDelivery {
@@ -113,8 +281,6 @@ pub struct ServiceDelivery {
     /// Address of the service
     #[serde(skip_serializing_if = "Option::is_none")]
     pub address: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub response_timestamp: Option<DateTime>,
     /// Id of the response
     #[serde(skip_serializing_if = "Option::is_none")]
     pub response_message_identifier: Option<String>, // Note: this is mandatory for idf profil

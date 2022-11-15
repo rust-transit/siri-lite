@@ -25,7 +25,7 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
     {
         let s = String::deserialize(deserializer)?;
         Ok(DateTime(
-            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%S").map_err(|e| {
+            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%SZ").map_err(|e| {
                 serde::de::Error::custom(format!("datetime format not valid: {}", e))
             })?,
         ))
@@ -37,8 +37,9 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
 /// Note: it is referenced as `xxxDelivery` in the siri specifications
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CommonDelivery {
-    pub version: String,
-    pub response_time_stamp: String,
+    pub version: Option<String>,
+    #[serde(rename = "ResponseTimestamp")]
+    pub response_timestamp: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Id of the query
     pub request_message_ref: Option<String>,
@@ -49,8 +50,8 @@ pub struct CommonDelivery {
 impl Default for CommonDelivery {
     fn default() -> Self {
         CommonDelivery {
-            version: "2.0".to_string(),
-            response_time_stamp: chrono::Utc::now().to_rfc3339(),
+            version: Some("2.0".to_string()),
+            response_timestamp: chrono::Utc::now().to_rfc3339(),
             // error_condition: None,
             status: Some(true),
             request_message_ref: None,
