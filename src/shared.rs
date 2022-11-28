@@ -25,7 +25,7 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
     {
         let s = String::deserialize(deserializer)?;
         Ok(DateTime(
-            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%SZ").map_err(|e| {
+            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%S%.fZ").map_err(|e| {
                 serde::de::Error::custom(format!("datetime format not valid: {}", e))
             })?,
         ))
