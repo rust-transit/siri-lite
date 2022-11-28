@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct DateTime(pub chrono::NaiveDateTime);
 
 impl std::string::ToString for DateTime {

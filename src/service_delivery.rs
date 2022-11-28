@@ -209,10 +209,10 @@ pub struct EstimatedCalls {
 #[serde(rename_all = "PascalCase")]
 pub struct EstimatedCall {
     pub stop_point_ref: StopPointRef,
-    pub expected_arrival_time: Option<String>,
-    pub expected_departure_time: Option<String>,
-    pub aimed_arrival_time: Option<String>,
-    pub aimed_departure_time: Option<String>,
+    pub expected_arrival_time: Option<DateTime>,
+    pub expected_departure_time: Option<DateTime>,
+    pub aimed_arrival_time: Option<DateTime>,
+    pub aimed_departure_time: Option<DateTime>,
     #[serde(default)]
     pub destination_display: Vec<DestinationDisplay>,
     pub arrival_status: Option<String>,
