@@ -134,9 +134,9 @@ pub struct EstimatedVehicleJourney {
     #[serde(default)]
     pub vehicle_mode: Vec<String>,
     #[serde(default)]
-    pub direction_name: Vec<DirectionName>,
+    pub direction_name: Vec<Name>,
     #[serde(default)]
-    pub origin_name: Vec<OriginName>,
+    pub origin_name: Vec<Name>,
     #[serde(default)]
     pub vehicle_journey_name: Vec<VehicleJourneyName>,
     #[serde(default)]
@@ -243,13 +243,7 @@ pub struct ArrivalPlatformName {
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct DirectionName {
-    pub value: String,
-    pub lang: Option<String>,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct OriginName {
+pub struct Name {
     pub value: String,
     pub lang: Option<String>,
 }
