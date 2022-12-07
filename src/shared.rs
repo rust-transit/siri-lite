@@ -1,11 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct DateTime(pub chrono::NaiveDateTime);
+pub struct DateTime(pub chrono::DateTime<chrono::FixedOffset>);
 
 impl std::string::ToString for DateTime {
     fn to_string(&self) -> String {
-        self.0.format("%Y-%m-%dT%H:%M:%S").to_string()
+        self.0.to_rfc3339()
     }
 }
 
@@ -24,11 +24,9 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
         D: ::serde::Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        Ok(DateTime(
-            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%S%.fZ").map_err(|e| {
-                serde::de::Error::custom(format!("datetime format not valid: {}", e))
-            })?,
-        ))
+        Ok(DateTime(chrono::DateTime::parse_from_rfc3339(&s).map_err(
+            |e| serde::de::Error::custom(format!("datetime format not valid: {}", e)),
+        )?))
     }
 }
 
