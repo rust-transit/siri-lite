@@ -216,8 +216,8 @@ pub struct EstimatedCall {
     #[serde(default)]
     pub destination_display: Vec<DestinationDisplay>,
     pub arrival_status: Option<String>,
-    pub arrival_proximity_text: ArrivalProximityText,
-    pub arrival_platform_name: ArrivalPlatformName,
+    pub arrival_proximity_text: Option<ArrivalProximityText>,
+    pub arrival_platform_name: Option<ArrivalPlatformName>,
     pub departure_status: Option<String>,
 }
 
