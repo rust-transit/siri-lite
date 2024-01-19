@@ -1,12 +1,11 @@
-use openapi_schema::OpenapiSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
-pub struct DateTime(pub chrono::NaiveDateTime);
+#[derive(Debug, Eq, PartialEq, Clone)]
+pub struct DateTime(pub chrono::DateTime<chrono::FixedOffset>);
 
 impl std::string::ToString for DateTime {
     fn to_string(&self) -> String {
-        self.0.format("%Y-%m-%dT%H:%M:%S").to_string()
+        self.0.to_rfc3339()
     }
 }
 
@@ -25,33 +24,20 @@ impl<'de> ::serde::Deserialize<'de> for DateTime {
         D: ::serde::Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        Ok(DateTime(
-            chrono::NaiveDateTime::parse_from_str(&s, "%Y-%m-%dT%H:%M:%S").map_err(|e| {
-                serde::de::Error::custom(format!("datetime format not valid: {}", e))
-            })?,
-        ))
-    }
-}
-
-impl OpenapiSchema for DateTime {
-    fn generate_schema(
-        _spec: &mut openapi::v3_0::Spec,
-    ) -> openapi::v3_0::ObjectOrReference<openapi::v3_0::Schema> {
-        openapi::v3_0::ObjectOrReference::Object(openapi::v3_0::Schema {
-            schema_type: Some("string".into()),
-            format: Some("date-time".into()),
-            ..Default::default()
-        })
+        Ok(DateTime(chrono::DateTime::parse_from_rfc3339(&s).map_err(
+            |e| serde::de::Error::custom(format!("datetime format not valid: {}", e)),
+        )?))
     }
 }
 
 /// Common fields used by all the siri's Delivery
 ///
 /// Note: it is referenced as `xxxDelivery` in the siri specifications
-#[derive(Serialize, Deserialize, OpenapiSchema, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CommonDelivery {
-    pub version: String,
-    pub response_time_stamp: String,
+    pub version: Option<String>,
+    #[serde(rename = "ResponseTimestamp")]
+    pub response_timestamp: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     /// Id of the query
     pub request_message_ref: Option<String>,
@@ -62,8 +48,8 @@ pub struct CommonDelivery {
 impl Default for CommonDelivery {
     fn default() -> Self {
         CommonDelivery {
-            version: "2.0".to_string(),
-            response_time_stamp: chrono::Utc::now().to_rfc3339(),
+            version: Some("2.0".to_string()),
+            response_timestamp: chrono::Utc::now().to_rfc3339(),
             // error_condition: None,
             status: Some(true),
             request_message_ref: None,

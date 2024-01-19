@@ -1,10 +1,9 @@
 use crate::shared::DateTime;
-use openapi_schema::OpenapiSchema;
 use serde::{Deserialize, Serialize};
 
 // Note: this list seems to be specific to the idf profile
 // it can be extended if needed
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[allow(non_camel_case_types)]
 pub enum MessageType {
     shortMessage,
@@ -14,15 +13,15 @@ pub enum MessageType {
     RTF,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct NaturalLangString {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lang: Option<String>,
-    pub value: String,
+    pub value: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Message {
     // type of the message
@@ -33,7 +32,7 @@ pub struct Message {
 }
 
 // Note: this seems to be a structure only for the idf profile
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema, Default)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct GeneralMessageStructure {
     /// Id of the impacted lines
@@ -49,7 +48,7 @@ pub struct GeneralMessageStructure {
     pub message: Vec<Message>,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema, Default)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct InfoMessage {
     /// reference of the format used in the message
@@ -77,7 +76,7 @@ pub struct InfoMessage {
     pub content: GeneralMessageStructure,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct InfoMessageCancellation {
     pub recorded_at_time: DateTime,
@@ -89,7 +88,7 @@ pub struct InfoMessageCancellation {
     pub info_message_identifier: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema, Default)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct GeneralMessageDelivery {
     #[serde(flatten)]

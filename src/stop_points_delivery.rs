@@ -1,19 +1,18 @@
-use openapi_schema::OpenapiSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Line {
     pub line_ref: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Location {
     pub longitude: f64,
     pub latitude: f64,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct AnnotatedStopPoint {
     pub stop_point_ref: String,
@@ -22,7 +21,7 @@ pub struct AnnotatedStopPoint {
     pub location: Location,
 }
 
-#[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct StopPointsDelivery {
     #[serde(flatten)]
