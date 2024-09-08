@@ -42,6 +42,9 @@ pub struct MonitoredCall {
     /// Status on the arrival at the stop
     #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_status: Option<ArrivalStatus>,
+    /// Platform of the stop
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrival_platform_name: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, OpenapiSchema)]
