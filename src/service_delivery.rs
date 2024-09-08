@@ -128,7 +128,7 @@ pub struct EstimatedVehicleJourney {
     pub destination_ref: DestinationRef,
     #[serde(default)]
     pub destination_name: Vec<DestinationName>,
-    pub operator_ref: OperatorRef,
+    pub operator_ref: Option<OperatorRef>,
     pub product_category_ref: ProductCategoryRef,
     #[serde(default)]
     pub journey_note: Vec<JourneyNote>,
