@@ -41,6 +41,9 @@ pub struct MonitoredCall {
     /// Status on the arrival at the stop
     #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_status: Option<ArrivalStatus>,
+    /// Platform of the stop
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrival_platform_name: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -125,7 +128,7 @@ pub struct EstimatedVehicleJourney {
     pub destination_ref: DestinationRef,
     #[serde(default)]
     pub destination_name: Vec<DestinationName>,
-    pub operator_ref: OperatorRef,
+    pub operator_ref: Option<OperatorRef>,
     pub product_category_ref: ProductCategoryRef,
     #[serde(default)]
     pub journey_note: Vec<JourneyNote>,
