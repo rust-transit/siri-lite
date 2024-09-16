@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub struct DateTime(pub chrono::DateTime<chrono::FixedOffset>);
 
-impl std::string::ToString for DateTime {
-    fn to_string(&self) -> String {
-        self.0.to_rfc3339()
+impl std::fmt::Display for DateTime {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(f, "{}", self.0.to_rfc3339())
     }
 }
 
